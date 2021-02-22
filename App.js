@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  View,
 } from 'react-native';
 import {verticalScale, scale} from './ScalingUtils';
 import GalleryModal from './component/GalleryModal';
@@ -74,6 +75,7 @@ const App = () => {
         visible={galleryVisible}
         requestClose={(state) => setGalleryVisible(state)}
         imageResult={(image) => {
+          setStorageVisible(false);
           setGalleryVisible(false);
           setImageSelected({
             path: image,
@@ -98,7 +100,13 @@ const App = () => {
           }
         />
       ) : (
-        <ImageViewer imageUrls={imageDownloadList} />
+        <View
+          style={{width: scale(width), height: verticalScale(height * 0.8)}}>
+          <ImageViewer
+            imageUrls={imageDownloadList}
+            saveToLocalByLongPress={true}
+          />
+        </View>
       )}
 
       <SafeAreaView style={styles.bottomTab}>
